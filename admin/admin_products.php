@@ -31,11 +31,71 @@ if (isset($_POST['add_product'])) {
     }
 }
 if (isset($_GET['delete'])) {
+
     $delete_id = $_GET['delete'];
 
-    mysqli_query($conn, "DELETE FROM products WHERE id = '$delete_id'") or die('query failed');
+    $image_query = mysqli_query($conn, 
+        "SELECT image FROM products WHERE id = '$delete_id'"
+    ) or die('query failed');
+
+    $fetch_image = mysqli_fetch_assoc($image_query);
+
+    $image_path = '../uploaded_img/'.$fetch_image['image'];
+
+    if(file_exists($image_path)){
+        unlink($image_path);
+    }
+
+    mysqli_query($conn, 
+        "DELETE FROM products WHERE id = '$delete_id'"
+    ) or die('query failed');
+
     header('location:admin_products.php');
 }
+if (isset($_POST['update_product'])) {
+
+    $update_id = $_POST['update_p_id'];
+    $update_name = $_POST['update_name'];
+    $update_price = $_POST['update_price'];
+
+    mysqli_query($conn,
+        "UPDATE products 
+         SET name='$update_name', price='$update_price'
+         WHERE id='$update_id'"
+    ) or die('query failed');
+
+    $update_image = $_FILES['update_image']['name'];
+    $update_tmp = $_FILES['update_image']['tmp_name'];
+    $update_size = $_FILES['update_image']['size'];
+    $old_image = trim($_POST['update_old_id']);
+
+    if(!empty($update_image)){
+
+        if($update_size > 2000000){
+
+            $message[] = 'image too large';
+
+        }else{
+
+            $new_path = '../uploaded_img/'.$update_image;
+
+            move_uploaded_file($update_tmp, $new_path);
+
+            mysqli_query($conn,
+                "UPDATE products SET image='$update_image' WHERE id='$update_id'"
+            );
+
+            $old_path = '../uploaded_img/'.$old_image;
+
+            if(file_exists($old_path)){
+                unlink($old_path);
+            }
+        }
+    }
+
+    header('location:admin_products.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,8 +157,8 @@ if (isset($_GET['delete'])) {
             
          ?>
          <form action="" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="update_p_id" value="<?php echo $fetch_update['id']; ?>   ">
-            <input type="hidden" name="update_old_id" value="<?php echo $fetch_update['image']; ?>   ">
+            <input type="hidden" name="update_p_id" value="<?php echo $fetch_update['id'];?>">
+            <input type="hidden" name="update_old_id" value="<?php echo $fetch_update['image']; ?>">
             <img src="../uploaded_img/<?php echo $fetch_update['image'] ?>" alt="">
             <input type="text" name="update_name" id="" value="<?php echo $fetch_update['name'] ?>" required class="box" placeholder="enter product name" > 
             <input type="number" name="update_price" id="" value="<?php echo $fetch_update['price'] ?>" required class="box" min="0" placeholder="enter product price" >
