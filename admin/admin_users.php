@@ -29,6 +29,7 @@ if (isset($_GET['delete'])) {
 <body>
     <?php include 'admin_header.php'; ?>
     <section class="users">
+        <h1 class="title">Accounts users</h1>
         <div class="box-container">
             <?php
             $select_users = mysqli_query($conn, "SELECT * FROM `users`") or die('query failed');
