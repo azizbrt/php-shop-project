@@ -43,7 +43,7 @@ if(isset($message)){
             $cart_count = mysqli_num_rows($cart_num_rows);
 
             ?>
-            <a href="cart_page.php">
+            <a href="cart.php">
                 <i class="fas fa-shopping-cart"></i>
                 <span>(<?php echo $cart_count; ?>)</span>
             </a>
