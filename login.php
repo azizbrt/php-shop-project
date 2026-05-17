@@ -26,7 +26,7 @@ if(isset($_POST['submit'])){
       }
      
    }else{
-      $message[]= 'incorrect email or password!';
+      $message[]= 'email ou mot de passe incorrect !';
    }
 
 }
@@ -39,7 +39,7 @@ if(isset($_POST['submit'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login</title>
+    <title>Se connecter</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css ">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -63,13 +63,10 @@ if(isset($message)){
     <div class="form-container">
         <form id="login-form" action="" method="post">
             <h3>login now</h3>
-
-            <input type="email" name="email" placeholder="enter your email" class="box">
-            <input type="password" name="password" placeholder="enter your password" class="box">
-  
-            <input type="submit" name="submit" value="login now" class="btn">
-            <p>Don't have an account? <a href="register.php">register now</a></p>
-            
+         <input type="email" name="email" placeholder="entrez votre e-mail" class="box">
+         <input type="password" name="password" placeholder="entrez votre mot de passe" class="box">
+         <input type="submit" name="submit" value="se connecter maintenant" class="btn">
+         <p>Vous n'avez pas de compte ? <a href="register.php">inscrivez-vous maintenant</a></p>            
         </form>
     </div>
     
