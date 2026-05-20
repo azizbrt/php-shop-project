@@ -19,8 +19,18 @@ if(isset($message)){
                 <a href="#" class="fab fa-instagram"></a>
                 <a href="#" class="fab fa-linkedin"></a>
             </div>
-            <p>new <a href="login.php">login</a>| <a href="register.php">register</a></p>
-        </div>
+            <?php if(isset($_SESSION['user_name'])){ ?>
+            <p><i class="fas fa-user-circle"></i>
+            <span><?php echo $_SESSION['user_name']; ?></span></p>
+                     <?php } else { ?>
+
+   <p>
+      <a href="login.php">login</a> | 
+      <a href="register.php">register</a>
+   </p>
+
+<?php } ?>
+                </div>
 
     </div>
     <div class="header-2">
@@ -48,11 +58,13 @@ if(isset($message)){
                 <span>(<?php echo $cart_count; ?>)</span>
             </a>
         </div>
+        <?php if(isset($_SESSION['user_name'])){ ?>
         <div class="user-box">
-            <p>username : <span><?php echo $_SESSION['user_name']; ?></span></p>
+            <p>username : <span><?php echo $_SESSION['user_name']?? 'guest';  ?></span></p>
             <p>email : <span><?php echo $_SESSION['user_email']; ?></span></p>
             <a href="../logout.php" class="delete-btn" >Logout</a>
         </div>
+        <?php } ?>
         </div>
     </div>
 </header>
